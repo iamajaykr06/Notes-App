@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Note</title>
+    <!-- CSS HERE -->
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f6fa;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 60px auto;
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 6px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+        margin-top: 0;
+        text-align: center;
+    }
+
+    textarea {
+        width: 100%;
+        min-height: 120px;
+        padding: 10px;
+        font-size: 14px;
+        resize: vertical;
+    }
+
+    button {
+        padding: 8px 14px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #218838;
+    }
+
+    .error {
+        color: #b00020;
+        background: #fdecea;
+        padding: 10px;
+        border-radius: 4px;
+        margin-bottom: 15px;
+    }
+
+    a {
+        display: inline-block;
+        margin-top: 15px;
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+</head>
+<body>
+
+<section class="container">
+    <h2>Edit Note</h2>
+
+    {% if error %}
+        <div class="error">{{ error }}</div>
+    {% endif %}
+
+    <form method="POST">
+        <textarea name="notes" autofocus>{{ note.content }}</textarea><br><br>
+        <button type="submit">Update</button>
+    </form>
+
+    <a href="{{ url_for('index') }}">← Back to notes</a>
+</section>
+
+</body>
+</html>

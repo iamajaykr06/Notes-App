@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Notes App</title>
+    <!-- CSS HERE -->
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f6fa;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 40px auto;
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 6px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+        margin-top: 0;
+        text-align: center;
+    }
+
+    textarea {
+        width: 100%;
+        min-height: 120px;
+        padding: 10px;
+        font-size: 14px;
+        resize: vertical;
+    }
+
+    button {
+        padding: 8px 14px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    .error {
+        color: #b00020;
+        background: #fdecea;
+        padding: 10px;
+        border-radius: 4px;
+        margin-bottom: 15px;
+    }
+
+    table {
+        width: 90%;
+        margin: 20px auto;
+        border-collapse: collapse;
+        background: white;
+    }
+
+    th, td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f0f0f0;
+    }
+
+    a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    hr {
+        margin: 40px 0;
+    }
+</style>
+
+</head>
+<body>
+
+<section class="container">
+    <h2>Write Your Notes</h2>
+
+    {% if error %}
+        <div class="error">{{ error }}</div>
+    {% endif %}
+
+    <form method="POST">
+        <textarea name="notes" placeholder="Type your notes here"></textarea><br><br>
+        <button type="submit">Post Note</button>
+    </form>
+</section>
+
+<hr>
+
+<h2 style="text-align:center">All Posted Notes</h2>
+
+{% if notes %}
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Content</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+
+    {% for note in notes %}
+    <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ note.content }}</td>
+        <td>
+            <a href="{{ url_for('edit_note', id=note.id) }}">Edit</a>
+        </td>
+        <td>
+            <form method="POST" action="{{ url_for('delete_note', id=note.id) }}">
+                <button type="submit" onclick="return confirm('Delete this note?')">
+                    Delete
+                </button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p style="text-align:center">You have not made any notes yet.</p>
+{% endif %}
+
+</body>
+</html>
